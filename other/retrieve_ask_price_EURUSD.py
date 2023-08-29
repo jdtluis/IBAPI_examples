@@ -34,6 +34,7 @@ eurusd_contract.exchange = 'IDEALPRO'
 eurusd_contract.currency = 'USD'
 
 #Request Market Data
+
 app.reqMktData(1, eurusd_contract, '', False, False, [])
 
 time.sleep(10) #Sleep interval to allow time for incoming price data

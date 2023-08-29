@@ -11,8 +11,12 @@ class IBapi(EWrapper, EClient):
 		EClient.__init__(self, self)
 		
 	def tickPrice(self, reqId, tickType, price, attrib):
-		if tickType == 2 and reqId == 1:
-			print('The current ask price is: ', price)
+		if (tickType == 67 or tickType == 2) and reqId in (2, 3):
+			print(f'The current ask price for {reqId} is: ', price)
+		else:
+			pass
+			#print(f'The current {reqId} and type {tickType} is: ', price.__str__())
+
 
 def run_loop():
 	app.run()
@@ -35,6 +39,24 @@ XAUUSD_contract.currency = 'USD'
 
 #Request Market Data
 app.reqMktData(1, XAUUSD_contract, '', False, False, [])
+
+contract = Contract()
+contract.symbol = "MGC"
+contract.secType = "FUT"
+contract.exchange = "COMEX"
+contract.currency = "USD"
+contract.lastTradeDateOrContractMonth = "202310"
+app.reqMarketDataType(3)
+app.reqMktData(2, contract, '', False, False, [])
+
+contract = Contract()
+contract.symbol = "MGC"
+contract.secType = "FUT"
+contract.exchange = "COMEX"
+contract.currency = "USD"
+contract.lastTradeDateOrContractMonth = "202312"
+app.reqMktData(3, contract, '', False, False, [])
+
 
 time.sleep(10) #Sleep interval to allow time for incoming price data
 app.disconnect()

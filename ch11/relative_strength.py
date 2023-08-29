@@ -78,7 +78,7 @@ def main():
 
     # Define a contract for IBM stock
     contract = Contract()
-    contract.symbol = "IBM"
+    contract.symbol = "AAPL"
     contract.secType = "STK"
     contract.exchange = "SMART"
     contract.currency = "USD"
@@ -92,6 +92,8 @@ def main():
 
     # Disconnect from TWS
     client.disconnect()
+    return client
+
 
 if __name__ == '__main__':
-    main()
+    client = main()

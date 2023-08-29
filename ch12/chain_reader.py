@@ -30,6 +30,7 @@ class ChainReader(EWrapper, EClient):
         # Launch the client thread
         thread = Thread(target=self.run)
         thread.start()
+        time.sleep(1)
 
     @iswrapper
     def contractDetails(self, reqId, desc):
@@ -181,7 +182,7 @@ def main():
     client = ChainReader('127.0.0.1', 7497, 0)
 
     # Read the option chain
-    chain, atm_price = read_option_chain(client, 'IBM')
+    chain, atm_price = read_option_chain(client, 'AAPL')
     for strike in chain:
         print('{} put: {}'.format(strike, chain[strike]['P']))
         print('{} call: {}'.format(strike, chain[strike]['C']))

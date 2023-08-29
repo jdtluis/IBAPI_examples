@@ -40,6 +40,16 @@ def FX_order(symbol):
 	return contract
 
 
+def FUT_order(symbol, exchange='COMEX', futMonth="202310"):
+	contract = Contract()
+	contract.symbol = symbol
+	contract.secType = 'FUT'
+	contract.exchange = exchange
+	contract.currency = 'USD'
+	contract.lastTradeDateOrContractMonth = futMonth
+	return contract
+
+
 app = IBapi()
 app.connect('127.0.0.1', 7497, 123)
 
@@ -62,9 +72,7 @@ while True:
 #Create order object
 order = Order()
 order.action = 'BUY'
-order.totalQuantity = 100000
 order.orderType = 'LMT'
-order.lmtPrice = '1.086'
 order.orderId = app.nextorderId
 app.nextorderId += 1
 order.transmit = False
@@ -74,9 +82,7 @@ order.firmQuoteOnly = False
 #Create stop loss order object
 stop_order = Order()
 stop_order.action = 'SELL'
-stop_order.totalQuantity = 100000
 stop_order.orderType = 'STP'
-stop_order.auxPrice = '1.096'
 stop_order.orderId = app.nextorderId
 app.nextorderId += 1
 stop_order.parentId = order.orderId
@@ -84,15 +90,21 @@ stop_order.transmit = True
 stop_order.eTradeOnly = False
 stop_order.firmQuoteOnly = False
 
-#Place orders
-app.placeOrder(order.orderId, FX_order('EURUSD'), order)
-app.placeOrder(stop_order.orderId, FX_order('EURUSD'), stop_order)
-time.sleep(50)
 
-#Cancel order 
-print()
-print('cancelling order')
-app.cancelOrder(order.orderId)
-
-time.sleep(3)
-app.disconnect()
+if __name__ == '__main__':
+	# Place orders
+	order.lmtPrice = '1928.5'
+	order.totalQuantity = 10
+	stop_order.auxPrice = '1927'
+	stop_order.totalQuantity = 10
+	app.placeOrder(order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), order)
+	app.placeOrder(stop_order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), stop_order)
+	#app.placeOrder(order.orderId, FX_order('EURUSD'), order)
+	#app.placeOrder(stop_order.orderId, FX_order('EURUSD'), stop_order)
+	time.sleep(50)
+	# Cancel order
+	print()
+	print('cancelling order')
+	app.cancelOrder(order.orderId)
+	time.sleep(3)
+	app.disconnect()

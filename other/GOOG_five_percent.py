@@ -70,7 +70,7 @@ def check_for_trade(df, contract):
 #Main
 app = IBapi()
 app.nextorderId = None
-app.connect('127.0.0.1', 7496, 123)
+app.connect('127.0.0.1', 7497, 123)
 
 #Start the socket in a thread
 api_thread = threading.Thread(target=run_loop)
@@ -91,6 +91,7 @@ apple_contract = app.Stock_contract('AAPL')
 #-----------------------------------------------------------#
 
 #Reqest tick data for google using custom function
+
 df = app.tick_df(401, google_contract)
 
 #Verify data stream

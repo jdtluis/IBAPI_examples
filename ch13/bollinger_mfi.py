@@ -13,6 +13,7 @@ MFI_PERIOD = 10
 InvState = Enum('InvState', 'OUT LONG SHORT')
 init_funds = 10000000.00
 
+
 def main():
 
     # Define symbols of interest

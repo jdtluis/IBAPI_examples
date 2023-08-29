@@ -42,8 +42,8 @@ time.sleep(5) #sleep to allow enough time for data to be returned
 
 ### Calculate 20 SMA without a library
 total = 0
-for i in app.data[-20:]:  
-    total += float(i[1])
+for i in app.data[-20:]:
+	total += float(i[1])
 
 print('20SMA =', round(total/20, 5)) 
 
