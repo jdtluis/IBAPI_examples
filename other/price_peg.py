@@ -46,28 +46,27 @@ class IBapi(EWrapper, EClient):
 		return app.contract_details[reqId].contract
 
 	def tickPrice(self, reqId, tickType, price, attrib):
-		if tickType == 2 and reqId == 1:
+		if tickType in (2, 67) and reqId == 1:
 			print('The current ask price is: ', price)
 			try:
-				#self.cancelOrder(self.nextorderId)
-				order.lmtPrice = price - 0.5
-				self.placeOrder(self.nextorderId, apple_contract, order)
+				order.lmtPrice = price - offset
+				self.placeOrder(self.nextorderId, contract_definition, order)
 			except:
 				pass
-
 
 
 def run_loop():
 	app.run()
 
 
-def Stock_contract(symbol, secType='STK', exchange='SMART', currency='USD'):
-	''' custom function to create stock contract '''
+def set_contract(symbol, secType='STK', exchange='SMART', currency='USD', contractMonth=None):
 	contract = Contract()
 	contract.symbol = symbol
 	contract.secType = secType
 	contract.exchange = exchange
 	contract.currency = currency
+	if contractMonth:
+		contract.lastTradeDateOrContractMonth = contractMonth  # "202310"
 	return contract
 
 app = IBapi()
@@ -89,38 +88,22 @@ while True:
 		time.sleep(1)
 
 #Create contracts
-apple_contract = Stock_contract('AAPL')
-#google_contract = Stock_contract('GOOG')
+contract_definition = set_contract('AAPL', secType='STK', exchange='SMART', currency='USD', contractMonth=None)
 
-#Update contract ID
-#google_contract = app.get_contract_details(101, google_contract)
-
-##Create price conditions
-#init
-#priceCondition = Create(OrderCondition.Price)
-#priceCondition.conId = google_contract.conId
-#priceCondition.exchange = google_contract.exchange
-
-#create conditions
-#priceCondition.isMore = True
-#priceCondition.triggerMethod = priceCondition.TriggerMethodEnum.Last
-#priceCondition.price = 1400.00
+offset = 0.5
 
 #Create order object
 order = Order()
 order.action = 'BUY'
 order.totalQuantity = 100
-order.orderType = 'LMT' #'MKT'
-order.lmtPrice = '180' #- optional - you can add a buy stop limit here
-#order.conditions.append(priceCondition)
+order.orderType = 'LMT'
+order.lmtPrice = '187.5'
 order.transmit = True
 order.eTradeOnly = False
 order.firmQuoteOnly = False
 
-#app.placeOrder(app.nextorderId, apple_contract, order)
-app.reqMktData(1, apple_contract, '', False, False, [])
-
-
+app.reqMarketDataType(3)  # Delayed data
+app.reqMktData(1, contract_definition, '', False, False, [])
 
 time.sleep(50)
 app.cancelOrder(app.nextorderId)

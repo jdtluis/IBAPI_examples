@@ -32,8 +32,7 @@ def run_loop():
 
 
 app = IBapi()
-app.connect('127.0.0.1', 7496, 123)
-
+app.connect('127.0.0.1', 7497, 123)
 app.nextorderId = None
 
 #Start the socket in a thread
@@ -52,20 +51,23 @@ while True:
 
 #Create contract
 contract = Contract()
-contract.symbol = 'TSLA'
+contract.symbol = 'SPY'
 contract.secType = 'OPT'
 contract.exchange = 'SMART'
-contract.lastTradeDateOrContractMonth = '20201002'
-contract.strike = 424
+contract.currency = 'USD'
+contract.lastTradeDateOrContractMonth = '20230829'
+contract.strike = 445
 contract.right = 'C'
 contract.multiplier = '100'
+
 
 #Create order object
 order = Order()
 order.action = 'BUY'
 order.totalQuantity = 1
 order.orderType = 'MKT'
-
+order.eTradeOnly = False
+order.firmQuoteOnly = False
 #Place order
 app.placeOrder(app.nextorderId, contract, order)
 

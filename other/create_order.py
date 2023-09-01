@@ -63,7 +63,7 @@ order = Order()
 order.action = 'BUY'
 order.totalQuantity = 5
 order.orderType = 'LMT'
-order.lmtPrice = '128.22'
+order.lmtPrice = '133.22'
 order.eTradeOnly = False
 order.firmQuoteOnly = False
 

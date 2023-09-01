@@ -93,9 +93,9 @@ stop_order.firmQuoteOnly = False
 
 if __name__ == '__main__':
 	# Place orders
-	order.lmtPrice = '1928.5'
+	order.lmtPrice = '1953'
 	order.totalQuantity = 10
-	stop_order.auxPrice = '1927'
+	stop_order.auxPrice = '1950'
 	stop_order.totalQuantity = 10
 	app.placeOrder(order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), order)
 	app.placeOrder(stop_order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), stop_order)
