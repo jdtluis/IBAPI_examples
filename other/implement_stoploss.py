@@ -40,7 +40,7 @@ def FX_order(symbol):
 	return contract
 
 
-def FUT_order(symbol, exchange='COMEX', futMonth="202310"):
+def fut_contract(symbol, exchange='COMEX', futMonth="202310"):
 	contract = Contract()
 	contract.symbol = symbol
 	contract.secType = 'FUT'
@@ -97,8 +97,8 @@ if __name__ == '__main__':
 	order.totalQuantity = 10
 	stop_order.auxPrice = '1950'
 	stop_order.totalQuantity = 10
-	app.placeOrder(order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), order)
-	app.placeOrder(stop_order.orderId, FUT_order('MGC', exchange='COMEX', futMonth="202310"), stop_order)
+	app.placeOrder(order.orderId, fut_contract('MGC', exchange='COMEX', futMonth="202310"), order)
+	app.placeOrder(stop_order.orderId, fut_contract('MGC', exchange='COMEX', futMonth="202310"), stop_order)
 	#app.placeOrder(order.orderId, FX_order('EURUSD'), order)
 	#app.placeOrder(stop_order.orderId, FX_order('EURUSD'), stop_order)
 	time.sleep(50)

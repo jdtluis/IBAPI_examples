@@ -55,8 +55,8 @@ contract.symbol = 'SPY'
 contract.secType = 'OPT'
 contract.exchange = 'SMART'
 contract.currency = 'USD'
-contract.lastTradeDateOrContractMonth = '20230829'
-contract.strike = 445
+contract.lastTradeDateOrContractMonth = '20230906'
+contract.strike = 444
 contract.right = 'C'
 contract.multiplier = '100'
 
